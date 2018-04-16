@@ -11,9 +11,6 @@
 // Tested against VMware vCenter Server 5.5.0 build-7460778
 //
 // todo: needs clean up
-
-
-
 System.log("Gathering SDKs");
 var vimhosts = VcPlugin.allSdkConnections;
 var alldatacenterfolders = null;
@@ -24,6 +21,8 @@ var reportarray = new Array();
 function buildcsv(array){
 	
 	var timenumber = new Date();
+		
+
 	var vroTempFileName = "tempreport-" + (timenumber.getTime()) + ".csv";
 	var tempDir = System.getTempDirectory();
 	System.log("Temp dir: " + tempDir);
@@ -41,12 +40,12 @@ function buildcsv(array){
 
 function loadarray(inputdatacenter,inputroles,inputobjects){
 	//System.log(inputobjects.getType());
-	System.log("Object has " + inputobjects.length + " elements");
+	System.log("Processing object with " + inputobjects.length + " elements");
 	for(var j = 0; j < inputobjects.length; j++){
-		System.log("Processing object: " + inputobjects[j].name + " of type " + inputobjects[j].type);
+//		System.log("Processing object: " + inputobjects[j].name + " of type " + inputobjects[j].type);
 		var object = inputobjects[j];
 		var perms = object.permission;
-		System.log("How many perms: " + perms.length);
+//		System.log("How many perms: " + perms.length);
 		for(var k = 0; k < perms.length;k++){
 			var newarr = new Array();
 			newarr[0] = inputdatacenter;
@@ -108,7 +107,9 @@ for(var i = 0; i < vimhosts.length; i++){
 	var AllResourcePools = vimhosts[i].getAllResourcePools();
 	System.log(AllResourcePools.length + " AllResourcePools have been retrieved.");
 	var AllVirtualMachines = vimhosts[i].getAllVirtualMachines();
-	System.log(AllVirtualMachines.length + " AllResourcePools have been retrieved.");
+	System.log(AllVirtualMachines.length + " AllVirtualMachines have been retrieved.");
+	var AllVmFolders = vimhosts[i].getAllVmFolders();
+	System.log(AllVmFolders.length + " AllVmFolders have been retrieved.");
 
 	loadarray(name,allroles,AllClusterComputeResources);
 	loadarray(name,allroles,AllComputeResources);
@@ -122,6 +123,7 @@ for(var i = 0; i < vimhosts.length; i++){
 	loadarray(name,allroles,AllNetworks);
 	loadarray(name,allroles,AllResourcePools);
 	loadarray(name,allroles,AllVirtualMachines);
+	loadarray(name,allroles,AllVmFolders);
 
 	
 	
