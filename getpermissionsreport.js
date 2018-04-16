@@ -16,7 +16,7 @@ var vimhosts = VcPlugin.allSdkConnections;
 var alldatacenterfolders = null;
 var perm = null;
 var reportarray = new Array();
-
+var debugreport = false;
 
 function buildcsv(array){
 	
@@ -130,6 +130,7 @@ for(var i = 0; i < vimhosts.length; i++){
 	
 	
 }
+if(debugreport == true){
 System.log("Reporting..." + reportarray.length);
 var line = "";
 for (var i = 0; i < reportarray.length; i++){
@@ -138,6 +139,7 @@ for (var i = 0; i < reportarray.length; i++){
 			   reportarray[i][6] + " | " + reportarray[i][7] + " | " + reportarray[i][8] + " | " +
 			   reportarray[i][9]);
 
+}
 }
 
 buildcsv(reportarray);
